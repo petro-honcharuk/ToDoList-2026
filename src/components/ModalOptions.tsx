@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
+
 import {
   Modal,
   StyleSheet,
@@ -6,9 +7,11 @@ import {
   TextInput,
   TouchableOpacity,
   View,
-} from "react-native";
-import { styles } from "../style";
-import ModalOptionsDelete from "./ModalOptionsDelete";
+} from 'react-native';
+
+import { styles } from '../style';
+
+import ModalOptionsDelete from './ModalOptionsDelete';
 type Props = {
   visible: boolean;
   onClose: () => void;
@@ -83,32 +86,32 @@ const stylesModal = StyleSheet.create({
   containerModal: {
     //flexDirection: "row",
 
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
     //backgroundColor: "green",
-    width: "96%",
-    height: "50%",
-    marginTop: "10%",
+    width: '96%',
+    height: '50%',
+    marginTop: '10%',
     borderWidth: 2,
     borderRadius: 5,
-    marginLeft: "2%",
+    marginLeft: '2%',
   },
   input: {
     borderWidth: 2,
-    borderColor: "black",
+    borderColor: 'black',
     borderRadius: 5,
-    width: "95%",
-    marginTop: "10%",
+    width: '95%',
+    marginTop: '10%',
 
-    marginBottom: "10%",
+    marginBottom: '10%',
   },
   conteinerButton: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
     //backgroundColor: "red",
-    width: "100%",
-    height: "50%",
-    marginBottom: "5%",
+    width: '100%',
+    height: '50%',
+    marginBottom: '5%',
   },
 });
