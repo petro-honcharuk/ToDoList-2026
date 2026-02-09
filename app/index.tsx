@@ -11,7 +11,7 @@ import { styles } from "../src/style";
 import ModalOptions from "@/src/components/ModalOptions";
 
 import ModalSearchComponent from "@/src/components/ModalSearchComponent";
-import { ItemDate } from "@/types/types";
+import { ItemDate } from "@/temp/types";
 import { useState } from "react";
 import HeaderComponent from "../src/components/HeaderComponent";
 

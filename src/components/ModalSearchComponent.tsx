@@ -1,5 +1,5 @@
 import { styles } from "@/src/style";
-import { ItemDate } from "@/types/types";
+import { ItemDate } from "@/temp/types";
 import React, { useState } from "react";
 import {
   FlatList,
