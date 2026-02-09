@@ -1,6 +1,6 @@
-import { styles } from "@/src/style";
-import { ItemDate } from "@/src/types/types";
-import React, { useState } from "react";
+import { styles } from '@/src/style';
+import { ItemDate } from '@/src/types/types';
+import React, { useState } from 'react';
 import {
   FlatList,
   Modal,
@@ -9,7 +9,7 @@ import {
   TextInput,
   TouchableOpacity,
   View,
-} from "react-native";
+} from 'react-native';
 type Props = {
   onClose: () => void;
   onSearch: (query: string) => void;
@@ -22,7 +22,7 @@ const ModalSearchComponent = ({
   results,
   onChoise,
 }: Props) => {
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState('');
 
   return (
     <Modal visible={true}>
@@ -53,7 +53,7 @@ const ModalSearchComponent = ({
           style={styles.button}
           onPress={() => {
             onClose();
-            setQuery("");
+            setQuery('');
           }}
         >
           <Text>Cancel</Text>
@@ -67,14 +67,14 @@ export default ModalSearchComponent;
 
 const stylesSearch = StyleSheet.create({
   containerModal: {
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
     //backgroundColor: "green",
-    width: "96%",
-    height: "80%",
-    marginTop: "20%",
+    width: '96%',
+    height: '80%',
+    marginTop: '20%',
     borderRadius: 10,
-    marginLeft: "2%",
+    marginLeft: '2%',
     borderWidth: 2,
   },
   text: {
