@@ -1,6 +1,5 @@
-import { styles } from '@/src/style';
-import { ItemDate } from '@/src/types/types';
 import React, { useState } from 'react';
+
 import {
   FlatList,
   Modal,
@@ -10,6 +9,9 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+
+import { styles } from '@/src/style';
+import { ItemDate } from '@/src/types/types';
 type Props = {
   onClose: () => void;
   onSearch: (query: string) => void;
