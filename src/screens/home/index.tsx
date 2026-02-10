@@ -1,22 +1,21 @@
+import { useState } from 'react';
+
 import {
   FlatList,
   Text,
   TextInput,
   TouchableOpacity,
   View,
-} from "react-native";
+} from 'react-native';
 
-import { styles } from "@/src/style";
-
-import ModalOptions from "@/src/components/ModalOptions";
-
-import HeaderComponent from "@/src/components/HeaderComponent";
-import ModalSearchComponent from "@/src/components/ModalSearchComponent";
-import { ItemDate } from "@/src/types/types";
-import { useState } from "react";
+import HeaderComponent from '@/src/components/HeaderComponent';
+import ModalOptions from '@/src/components/ModalOptions';
+import ModalSearchComponent from '@/src/components/ModalSearchComponent';
+import { styles } from '@/src/style';
+import { ItemDate } from '@/src/types/types';
 
 export const HomeScreen = () => {
-  const [text, setText] = useState("");
+  const [text, setText] = useState('');
   const [listOfItem, setListOfItem] = useState<ItemDate[]>([]);
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedItem, setSelectedItem] = useState<ItemDate | null>(null);
@@ -30,7 +29,7 @@ export const HomeScreen = () => {
         { id: Math.floor(Math.random() * (100000 - 0 + 1)) + 0, title: text },
       ]);
     }
-    setText("");
+    setText('');
   };
   const handlerDelete = (item: number) => {
     setListOfItem(listOfItem.filter((i) => i.id !== item));
@@ -39,12 +38,12 @@ export const HomeScreen = () => {
   };
   const handlerChange = (id: number, newText: string) => {
     setListOfItem((prev) =>
-      prev.map((item) => (item.id === id ? { ...item, title: newText } : item)),
+      prev.map((item) => (item.id === id ? { ...item, title: newText } : item))
     );
   };
   const handlerSearch = (query: string) => {
     const resultSearch = listOfItem.filter((item) =>
-      item.title.toLowerCase().includes(query.toLowerCase()),
+      item.title.toLowerCase().includes(query.toLowerCase())
     );
     setFiltredList(resultSearch);
   };
