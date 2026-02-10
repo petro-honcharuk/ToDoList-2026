@@ -11,6 +11,7 @@ import {
 import HeaderComponent from '@/src/components/HeaderComponent';
 import ModalOptions from '@/src/components/ModalOptions';
 import ModalSearchComponent from '@/src/components/ModalSearchComponent';
+import Spacer from '@/src/components/Spacer';
 import { styles } from '@/src/style';
 import { ItemDate } from '@/src/types/types';
 
@@ -80,8 +81,9 @@ export const HomeScreen = () => {
           </TouchableOpacity>
         </View>
       </View>
+      <Spacer height={20} />
 
-      <View style={{ marginTop: 20 }}>
+      <View>
         <FlatList<ItemDate>
           data={listOfItem}
           keyExtractor={(item) => item.id.toString()}
