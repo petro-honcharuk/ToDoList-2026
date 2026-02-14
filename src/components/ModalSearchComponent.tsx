@@ -12,6 +12,8 @@ import {
 
 import { styles } from '@/src/style';
 import { ItemDate } from '@/src/types/types';
+
+import Button from './Button';
 type Props = {
   onClose: () => void;
   onSearch: (query: string) => void;
@@ -51,15 +53,13 @@ const ModalSearchComponent = ({
             </TouchableOpacity>
           )}
         />
-        <TouchableOpacity
-          style={styles.button}
+        <Button
+          title="Cancel"
           onPress={() => {
             onClose();
             setQuery('');
           }}
-        >
-          <Text>Cancel</Text>
-        </TouchableOpacity>
+        />
       </View>
     </Modal>
   );

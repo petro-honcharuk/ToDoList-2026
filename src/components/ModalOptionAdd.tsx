@@ -5,25 +5,39 @@ import { Modal, StyleSheet, Text, View } from 'react-native';
 import Button from './Button';
 type Props = {
   visible: boolean;
-  onDelete: (id: number) => void;
-  itemId: number;
+  onAdd: (text: string) => void;
+  //itemId: number;
   onCancel: () => void;
+  text: string;
+  onClose: () => void;
 };
 
-const ModalOptionsDelete = ({ visible, onDelete, itemId, onCancel }: Props) => {
+const ModalOptionsAdd = ({
+  visible,
+  onCancel,
+  onAdd,
+  text,
+  onClose,
+}: Props) => {
   return (
     <Modal visible={visible}>
       <View style={stylesDelete.containerModal}>
-        <Text style={stylesDelete.text}>Do you confirm the deletion?</Text>
-
-        <Button title="Delete" onPress={() => onDelete(itemId)} />
+        <Text style={stylesDelete.text}>Do you want add new item?</Text>
+        <Button
+          title="Add"
+          onPress={() => {
+            onAdd(text);
+            onCancel();
+            onClose();
+          }}
+        />
         <Button title="Cansel" onPress={onCancel} />
       </View>
     </Modal>
   );
 };
 
-export default ModalOptionsDelete;
+export default ModalOptionsAdd;
 
 const stylesDelete = StyleSheet.create({
   containerModal: {

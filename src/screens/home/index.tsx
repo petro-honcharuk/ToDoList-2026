@@ -8,7 +8,10 @@ import {
   View,
 } from 'react-native';
 
-import HeaderComponent from '@/src/components/HeaderComponent';
+// import HeaderComponent from '@/src/components/HeaderComponent';
+
+import Button from '@/src/components/Button';
+import ModalAdd from '@/src/components/ModalAdd';
 import ModalOptions from '@/src/components/ModalOptions';
 import ModalSearchComponent from '@/src/components/ModalSearchComponent';
 import Spacer from '@/src/components/Spacer';
@@ -22,8 +25,9 @@ export const HomeScreen = () => {
   const [selectedItem, setSelectedItem] = useState<ItemDate | null>(null);
   const [modalSearchVisible, setModalSearchVisible] = useState(false);
   const [filtredList, setFiltredList] = useState<ItemDate[]>([]);
+  const [modalAdd, setModalAdd] = useState(false);
 
-  const handlerAdd = () => {
+  const handlerAdd = (text: string) => {
     if (text) {
       setListOfItem([
         ...listOfItem,
@@ -31,6 +35,7 @@ export const HomeScreen = () => {
       ]);
     }
     setText('');
+    console.log('item add');
   };
   const handlerDelete = (item: number) => {
     setListOfItem(listOfItem.filter((i) => i.id !== item));
@@ -56,7 +61,7 @@ export const HomeScreen = () => {
 
   return (
     <View style={styles.container}>
-      <HeaderComponent />
+      {/* <HeaderComponent title="My To Do List" /> */}
       <View style={styles.inputContainer}>
         <TextInput
           style={styles.input}
@@ -67,18 +72,14 @@ export const HomeScreen = () => {
           textAlignVertical="top"
         ></TextInput>
         <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.button} onPress={handlerAdd}>
-            <Text>Add</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.button}
+          <Button title="Add" onPress={() => setModalAdd(true)} />
+          <Button
+            title="Search"
             onPress={() => {
               setModalSearchVisible(true);
               setFiltredList(listOfItem);
             }}
-          >
-            <Text>Search</Text>
-          </TouchableOpacity>
+          />
         </View>
       </View>
       <Spacer height={20} />
@@ -88,12 +89,22 @@ export const HomeScreen = () => {
           data={listOfItem}
           keyExtractor={(item) => item.id.toString()}
           renderItem={({ item }) => (
-            <TouchableOpacity onPress={() => openModalFirst(item)}>
-              <Text style={styles.text}>{item.title}</Text>
+            <TouchableOpacity
+              style={styles.text}
+              onPress={() => openModalFirst(item)}
+            >
+              <Text>{item.title}</Text>
             </TouchableOpacity>
           )}
         />
       </View>
+
+      <ModalAdd
+        visible={modalAdd}
+        onClose={() => setModalAdd(false)}
+        onAdd={handlerAdd}
+      />
+
       {selectedItem && (
         <ModalOptions
           visible={modalVisible}

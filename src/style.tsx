@@ -3,15 +3,20 @@ import { StyleSheet } from 'react-native';
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    //justifyContent: "center",
-    //alignItems: "center",
-    //backgroundColor: "green",
+    //justifyContent: 'center',
+    //alignItems: 'center',
+    //backgroundColor: 'green',
+    width: '96%',
+    height: '90%',
+    marginLeft: '2%',
+    borderWidth: 2,
+    borderRadius: 5,
   },
 
   headerList: {
     //backgroundColor: "blue",
     width: '96%',
-    height: '10%',
+    height: '5%',
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: '8%',
@@ -66,6 +71,8 @@ export const styles = StyleSheet.create({
     margin: 5,
   },
   text: {
+    flexDirection: 'row',
+    padding: 20,
     margin: 5,
     borderWidth: 2,
     width: '95%',
