@@ -1,166 +1,87 @@
-import { useState } from 'react';
+import React, { useMemo, useState } from "react";
 
-import { FlatList, Text, TouchableOpacity, View } from 'react-native';
+import { FlatList, StyleSheet, Text, View } from "react-native";
 
-// import HeaderComponent from '@/src/components/HeaderComponent';
-
-import { SafeAreaView } from 'react-native-safe-area-context';
-
-import Button from '@/src/components/Button';
-import HeaderForArt from '@/src/components/HeaderForArt';
-import ModalAdd from '@/src/components/ModalAdd';
-import ModalOptions from '@/src/components/ModalOptions';
-//import ModalSearchComponent from '@/src/components/ModalSearchComponent';
-import Spacer from '@/src/components/Spacer';
-import { styles } from '@/src/style';
-import { ItemDate } from '@/src/types/types';
+import { SearchHeader } from "@/src/components/SearchHeader";
+import { AddModal } from "@/src/components/modals/AddModal";
+import { EditModal } from "@/src/components/modals/EditModal";
+import { RemoveModal } from "@/src/components/modals/RemoveModal";
+import { ItemDate } from "@/src/types/types";
 
 export const HomeScreen = () => {
-  //const [text, setText] = useState('');
   const [listOfItem, setListOfItem] = useState<ItemDate[]>([]);
-  const [modalVisible, setModalVisible] = useState(false);
-  const [selectedItem, setSelectedItem] = useState<ItemDate | null>(null);
-  //const [modalSearchVisible, setModalSearchVisible] = useState(false);
-  const [filtredList, setFiltredList] = useState<ItemDate[]>([]);
-  const [modalAdd, setModalAdd] = useState(false);
-  const [modalMode, setModalMode] = useState<'edit' | 'delete' | null>(null);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [modal, setModal] = useState<"add" | "edit" | "delete" | null>(null);
 
-  const handlerAdd = (text: string) => {
-    if (!text) return;
-    const newList = [
-      ...listOfItem,
-      { id: Math.floor(Math.random() * (100000 - 0 + 1)) + 0, title: text },
-    ];
-    setListOfItem(newList);
-
-    setFiltredList(newList);
-  };
-  const handlerDelete = (id: number) => {
-    setListOfItem((prev) => {
-      const newList = prev.filter((item) => item.id !== id);
-      setFiltredList(newList);
-      return newList;
-    });
-    setModalVisible(false);
-  };
-  const handlerChange = (id: number, newText: string) => {
-    setListOfItem((prev) => {
-      const newList = prev.map((item) =>
-        item.id === id ? { ...item, title: newText } : item
-      );
-      setFiltredList(newList);
-      return newList;
-    });
-  };
-  const handlerSearch = (query: string) => {
-    if (query.trim() === '') {
-      return setFiltredList(listOfItem);
-    }
-    const resultSearch = listOfItem.filter((item) =>
-      item.title.toLowerCase().includes(query.toLowerCase())
+  const filteredList = useMemo(() => {
+    return listOfItem.filter((item) =>
+      item.title.toLowerCase().includes(searchQuery.toLowerCase()),
     );
-    setFiltredList(resultSearch);
+  }, [listOfItem, searchQuery]);
+
+  const addItem = (text: string) => {
+    const newItem = {
+      id: Math.floor(Math.random() * (100000 - 0 + 1)) + 0,
+      title: text,
+    };
+    setListOfItem((prev) => [...prev, newItem]);
   };
 
-  const openModalOptionEdit = (item: ItemDate) => {
-    setSelectedItem(item);
-    setModalMode('edit');
-    setModalVisible(true);
+  const removeItem = (id: number) => {
+    setListOfItem((prev) => prev.filter((item) => item.id !== id));
   };
-  const openModalOptionDelete = (item: ItemDate) => {
-    setSelectedItem(item);
-    setModalMode('delete');
-    setModalVisible(true);
-  };
-  const openModalOption = (item: ItemDate) => {
-    setSelectedItem(item);
 
-    setModalVisible(true);
+  const editItem = (id: number, newText: string) => {
+    setListOfItem((prev) =>
+      prev.map((item) => (item.id === id ? { ...item, title: newText } : item)),
+    );
+  };
+
+  const closeModal = () => {
+    setModal(null);
+  };
+
+  const showAddModal = () => {
+    setModal("add");
   };
 
   return (
     <View style={styles.container}>
-      {/* <HeaderComponent title="My To Do List" /> */}
-      {/* <View style={styles.inputContainer}>
-        <TextInput
-          style={styles.input}
-          placeholder="Введіть завдання"
-          onChangeText={setText}
-          value={text}
-          multiline
-          textAlignVertical="top"
-        ></TextInput>
-        <View style={styles.buttonContainer}>
-          <Button title="Add" onPress={() => setModalAdd(true)} />
-          <Button
-            title="Search"
-            onPress={() => {
-              setModalSearchVisible(true);
-              setFiltredList(listOfItem);
-            }}
-          />
-        </View>
-      </View> */}
-      <SafeAreaView>
-        <HeaderForArt
-          onAdd={() => setModalAdd(true)}
-          onSearch={handlerSearch}
-        />
-      </SafeAreaView>
-
-      <Spacer height={20} />
-
-      <View>
-        <FlatList<ItemDate>
-          data={filtredList}
-          keyExtractor={(item) => item.id.toString()}
-          renderItem={({ item }) => (
-            <TouchableOpacity
-              style={styles.textConteiner}
-              onPress={() => openModalOption(item)}
-            >
-              <Text style={styles.text}>{item.title}</Text>
-              <View style={styles.buttonContainer}>
-                <Button
-                  title="Edit"
-                  onPress={() => openModalOptionEdit(item)}
-                  disabled={false}
-                />
-                <Button
-                  title="Del"
-                  onPress={() => openModalOptionDelete(item)}
-                />
-              </View>
-            </TouchableOpacity>
-          )}
-        />
-      </View>
-
-      <ModalAdd
-        visible={modalAdd}
-        onClose={() => setModalAdd(false)}
-        onAdd={handlerAdd}
+      <SearchHeader
+        searchQuery={searchQuery}
+        onSearch={setSearchQuery}
+        onPressAdd={showAddModal}
       />
 
-      {selectedItem && (
-        <ModalOptions
-          visible={modalVisible}
-          modalMode={modalMode}
-          onClose={() => setModalVisible(false)}
-          onDelete={handlerDelete}
-          onChange={handlerChange}
-          content={selectedItem.title}
-          itemId={selectedItem.id}
-        />
-      )}
-      {/* {modalSearchVisible && (
-        <ModalSearchComponent
-          onClose={() => setModalSearchVisible(false)}
-          onSearch={handlerSearch}
-          results={filtredList}
-          onChoise={openModalOption}
-        />
-      )} */}
+      <FlatList
+        data={filteredList}
+        renderItem={({ item }) => {
+          return (
+            <View>
+              <Text>{item.title}</Text>
+            </View>
+          );
+        }}
+      />
+
+      <AddModal
+        visible={modal === "add"}
+        onClose={closeModal}
+        onAdd={addItem}
+      />
+
+      <EditModal visible={modal === "edit"} />
+
+      <RemoveModal visible={modal === "delete"} />
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "white",
+    paddingHorizontal: "10%",
+    paddingVertical: 40,
+  },
+});
