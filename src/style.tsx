@@ -2,21 +2,21 @@ import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    //flex: 1,
     //justifyContent: 'center',
     //alignItems: 'center',
     //backgroundColor: 'green',
-    width: '96%',
-    height: '90%',
-    marginLeft: '2%',
-    borderWidth: 2,
-    borderRadius: 5,
+    //width: '96%',
+    //height: '90%',
+    //marginLeft: '2%',
+    //borderWidth: 2,
+    // borderRadius: 5,
   },
 
   headerList: {
     //backgroundColor: "blue",
     width: '96%',
-    height: '5%',
+    height: 50,
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: '8%',
@@ -34,7 +34,7 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: '5%',
-    //backgroundColor: "red",
+    //backgroundColor: 'red',
     height: 70,
     margin: 10,
   },
@@ -43,17 +43,18 @@ export const styles = StyleSheet.create({
     height: '100%',
     alignItems: 'center',
     justifyContent: 'center',
-    //backgroundColor: "green",
-    marginLeft: '5%',
+    //backgroundColor: 'green',
+    marginLeft: 'auto',
+    //marginBottom: 'auto',
   },
   input: {
     borderWidth: 2,
     width: '75%',
-    height: '75%',
+    height: 60,
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 5,
-    //backgroundColor: "black",
+    //backgroundColor: 'red',
   },
   button: {
     width: 50,
@@ -70,12 +71,16 @@ export const styles = StyleSheet.create({
     //backgroundColor: "#007AFF",
     margin: 5,
   },
-  text: {
+  textConteiner: {
     flexDirection: 'row',
     padding: 20,
     margin: 5,
     borderWidth: 2,
     width: '95%',
+    height: 65,
     borderRadius: 5,
+  },
+  text: {
+    width: '70%',
   },
 });

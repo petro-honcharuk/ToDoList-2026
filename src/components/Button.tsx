@@ -11,11 +11,23 @@ type Prop = {
   title: string;
   onPress: () => void;
   style?: StyleProp<ViewStyle>;
+  disabled?: boolean;
+  visible?: boolean;
 };
 
-const Button = ({ title, onPress, style }: Prop) => {
+const Button = ({
+  title,
+  onPress,
+  style,
+  disabled = false,
+  visible = true,
+}: Prop) => {
+  if (!visible) return null;
   return (
-    <TouchableOpacity style={[styles.btn, style]} onPress={onPress}>
+    <TouchableOpacity
+      style={[styles.btn, disabled && styles.disabled, style]}
+      onPress={disabled ? undefined : onPress}
+    >
       <Text>{title}</Text>
     </TouchableOpacity>
   );
@@ -27,14 +39,15 @@ const styles = StyleSheet.create({
   btn: {
     padding: 5,
     borderRadius: 5,
-    marginVertical: 5,
+    //marginVertical: 5,
     borderWidth: 2,
-    width: 50,
-    height: 23,
+    width: 60,
+    height: 30,
     alignItems: 'center',
     justifyContent: 'center',
+    marginHorizontal: 10,
   },
-  passed: {
+  disabled: {
     opacity: 0.5,
   },
 });

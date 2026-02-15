@@ -1,8 +1,10 @@
 import React from 'react';
 
-import { Modal, StyleSheet, Text, View } from 'react-native';
+import { Modal, StyleSheet, View } from 'react-native';
 
 import Button from './Button';
+import HeaderComponent from './HeaderComponent';
+import Spacer from './Spacer';
 type Props = {
   visible: boolean;
   onAdd: (text: string) => void;
@@ -22,7 +24,9 @@ const ModalOptionsAdd = ({
   return (
     <Modal visible={visible}>
       <View style={stylesDelete.containerModal}>
-        <Text style={stylesDelete.text}>Do you want add new item?</Text>
+        <HeaderComponent title="Do you want add new item?" />
+        <Spacer />
+
         <Button
           title="Add"
           onPress={() => {
@@ -31,6 +35,7 @@ const ModalOptionsAdd = ({
             onClose();
           }}
         />
+        <Spacer height={15} />
         <Button title="Cansel" onPress={onCancel} />
       </View>
     </Modal>

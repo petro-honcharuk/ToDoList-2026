@@ -1,16 +1,9 @@
 import React, { useEffect, useState } from 'react';
 
-import {
-  Modal,
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { Modal, StyleSheet, TextInput, View } from 'react-native';
 
-import { styles } from '../style';
-
+import Button from './Button';
+import HeaderComponent from './HeaderComponent';
 import ModalOptionsDelete from './ModalOptionsDelete';
 type Props = {
   visible: boolean;
@@ -19,6 +12,7 @@ type Props = {
   onChange: (id: number, text: string) => void;
   content: string;
   itemId: number;
+  modalMode: 'edit' | 'delete' | null;
 };
 export default function ModalOptions({
   visible,
@@ -27,6 +21,7 @@ export default function ModalOptions({
   onChange,
   content,
   itemId,
+  modalMode,
 }: Props) {
   const [modalDeleteVisible, setModalDeleteVisible] = useState(false);
   const [changeText, setChangeText] = useState(content);
@@ -35,6 +30,7 @@ export default function ModalOptions({
   }, [content]);
   return (
     <Modal visible={visible}>
+      <HeaderComponent title="Change your item" />
       <View style={stylesModal.containerModal}>
         <TextInput
           style={stylesModal.input}
@@ -45,28 +41,26 @@ export default function ModalOptions({
         ></TextInput>
 
         <View style={stylesModal.conteinerButton}>
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => {
-              setModalDeleteVisible(true);
-              //onDelete(itemId);
-            }}
-          >
-            <Text>Delete</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => {
-              onChange(itemId, changeText);
-              onClose();
-            }}
-          >
-            <Text>Edit</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.button} onPress={onClose}>
-            <Text>Back</Text>
-          </TouchableOpacity>
+          {modalMode === 'delete' && (
+            <Button
+              title="Delete"
+              onPress={() => {
+                setModalDeleteVisible(true);
+                //onDelete(itemId);
+              }}
+            />
+          )}
+          {modalMode === 'edit' && (
+            <Button
+              title="Edit"
+              onPress={() => {
+                onChange(itemId, changeText);
+                onClose();
+              }}
+              disabled={changeText === content}
+            />
+          )}
+          <Button title="Back" onPress={onClose} />
         </View>
         <ModalOptionsDelete
           visible={modalDeleteVisible}

@@ -1,8 +1,10 @@
 import React from 'react';
 
-import { Modal, StyleSheet, Text, View } from 'react-native';
+import { Modal, StyleSheet, View } from 'react-native';
 
 import Button from './Button';
+import HeaderComponent from './HeaderComponent';
+import Spacer from './Spacer';
 type Props = {
   visible: boolean;
   onDelete: (id: number) => void;
@@ -14,9 +16,11 @@ const ModalOptionsDelete = ({ visible, onDelete, itemId, onCancel }: Props) => {
   return (
     <Modal visible={visible}>
       <View style={stylesDelete.containerModal}>
-        <Text style={stylesDelete.text}>Do you confirm the deletion?</Text>
+        <HeaderComponent title="Confirm the deletion?" />
+        <Spacer height={20} />
 
         <Button title="Delete" onPress={() => onDelete(itemId)} />
+        <Spacer height={15} />
         <Button title="Cansel" onPress={onCancel} />
       </View>
     </Modal>
