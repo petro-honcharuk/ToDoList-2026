@@ -64,7 +64,6 @@ module.exports = defineConfig([
           alphabetize: { order: 'asc', caseInsensitive: true },
         },
       ],
-      'prettier/prettier': ['error', { endOfLine: 'auto' }],
     },
   },
   {

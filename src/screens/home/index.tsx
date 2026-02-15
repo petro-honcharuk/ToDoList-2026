@@ -32,8 +32,6 @@ export const HomeScreen = () => {
       { id: Math.floor(Math.random() * (100000 - 0 + 1)) + 0, title: text },
     ];
     setListOfItem(newList);
-
-    setFiltredList(newList);
   };
   const handlerDelete = (id: number) => {
     setListOfItem((prev) => {
