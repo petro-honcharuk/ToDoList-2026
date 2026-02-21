@@ -1,18 +1,47 @@
 import React from 'react';
 
-import { Text, View } from 'react-native';
+import { StyleSheet, TextInput, View } from 'react-native';
 
-import { styles } from '@/src/style';
-type Prop = {
-  title: string;
+import { ButtonComponent } from './ButtonComponent';
+
+type Props = {
+  onPress: () => void;
+  onSearch: (query: string) => void;
+  searchQuery: string;
 };
 
-const HeaderComponent = ({ title }: Prop) => {
+export const HeaderComponent = ({ onPress, onSearch, searchQuery }: Props) => {
   return (
-    <View style={styles.headerList}>
-      <Text style={styles.headerTitle}> {title}</Text>
+    <View style={styles.container}>
+      <TextInput
+        style={styles.input}
+        placeholder="Search..."
+        value={searchQuery}
+        onChangeText={onSearch}
+      ></TextInput>
+      <ButtonComponent
+        title="Add"
+        onPress={() => {
+          onPress();
+        }}
+      />
     </View>
   );
 };
 
-export default HeaderComponent;
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderBottomWidth: 2,
+    margin: 10,
+  },
+  input: {
+    height: 45,
+    width: '80%',
+    borderWidth: 2,
+    borderRadius: 8,
+    margin: 5,
+  },
+});
