@@ -15,50 +15,47 @@ import { ItemDate } from '../types/types';
 
 export const HomeScreen = () => {
   const {
-    showModalAdd,
-    closeModalAdd,
     addItem,
-    modalAddVisible,
     searchItem,
     searchText,
     setSearchText,
-    showModalDelete,
-    closeModalDelete,
-    modalDeleteVisible,
     deleteItem,
     setSelectedItem,
     selectedItem,
-    modalEditVisible,
-    showModalEdit,
-    closeModalEdit,
     editItem,
+    setModal,
+    modal,
   } = useToDo();
   return (
     <View>
       <TitleComponent title="ToDoList" />
       <HeaderComponent
-        onPress={showModalAdd}
+        onPress={() => {
+          setModal('add');
+        }}
         onSearch={setSearchText}
         searchQuery={searchText}
       />
+
       <AddModal
-        visible={modalAddVisible}
-        onClose={closeModalAdd}
+        visible={modal === 'add'}
+        onClose={() => setModal(null)}
         onAdd={addItem}
       />
+
       {selectedItem && (
         <DeleteModal
-          visible={modalDeleteVisible}
+          visible={modal === 'delete'}
           onDelete={deleteItem}
-          closeModalDelete={closeModalDelete}
+          closeModalDelete={() => setModal(null)}
           idItem={selectedItem.id}
         />
       )}
       {selectedItem && (
         <EditModal
-          visible={modalEditVisible}
+          visible={modal === 'edit'}
           onEdit={editItem}
-          onClose={closeModalEdit}
+          onClose={() => setModal(null)}
           idItem={selectedItem.id}
           titleItem={selectedItem.title}
         />
@@ -75,8 +72,8 @@ export const HomeScreen = () => {
                 size={24}
                 color="black"
                 onPress={() => {
-                  showModalDelete();
                   setSelectedItem(item);
+                  setModal('delete');
                 }}
               />
               <MaterialIcons
@@ -84,8 +81,8 @@ export const HomeScreen = () => {
                 size={24}
                 color="black"
                 onPress={() => {
-                  showModalEdit();
                   setSelectedItem(item);
+                  setModal('edit');
                 }}
               />
             </View>
