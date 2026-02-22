@@ -1,16 +1,15 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 
-import { FlatList, View, Text } from 'react-native';
+import { FlatList, View, Text, StyleSheet } from 'react-native';
 
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 
-import { AddModal } from '../components/AddModal';
-import { DeleteModal } from '../components/DeleteModal';
-import { EditModal } from '../components/EditModal';
 import { HeaderComponent } from '../components/HeaderComponent';
+import { AddModal } from '../components/modals/AddModal';
+import { DeleteModal } from '../components/modals/DeleteModal';
+import { EditModal } from '../components/modals/EditModal';
 import { TitleComponent } from '../components/TitleComponent';
 import { useToDo } from '../hooks/useToDo';
-import { styles } from '../style/style';
 import { ItemDate } from '../types/types';
 
 export const HomeScreen = () => {
@@ -23,72 +22,89 @@ export const HomeScreen = () => {
     setSelectedItem,
     selectedItem,
     editItem,
-    setModal,
+    onShowModal,
+    onCloseModal,
     modal,
   } = useToDo();
+
+  const renderItem = useCallback(
+    ({ item }: { item: ItemDate }) => (
+      <View style={styles.itemsContainer}>
+        <Text>{item.title}</Text>
+        <View style={styles.iconContainer}>
+          <MaterialIcons
+            name="delete"
+            size={24}
+            color="black"
+            onPress={() => {
+              setSelectedItem(item);
+              onShowModal('delete');
+            }}
+          />
+          <MaterialIcons
+            name="edit"
+            size={24}
+            color="black"
+            onPress={() => {
+              setSelectedItem(item);
+              onShowModal('edit');
+            }}
+          />
+        </View>
+      </View>
+    ),
+    []
+  );
+
   return (
     <View>
       <TitleComponent title="ToDoList" />
       <HeaderComponent
         onPress={() => {
-          setModal('add');
+          onShowModal('add');
         }}
         onSearch={setSearchText}
         searchQuery={searchText}
       />
 
+      <FlatList
+        data={searchItem}
+        renderItem={renderItem}
+        keyExtractor={(item) => item.id.toString()}
+      />
+
       <AddModal
         visible={modal === 'add'}
-        onClose={() => setModal(null)}
+        onClose={onCloseModal}
         onAdd={addItem}
       />
 
-      {selectedItem && (
-        <DeleteModal
-          visible={modal === 'delete'}
-          onDelete={deleteItem}
-          closeModalDelete={() => setModal(null)}
-          idItem={selectedItem.id}
-        />
-      )}
-      {selectedItem && (
-        <EditModal
-          visible={modal === 'edit'}
-          onEdit={editItem}
-          onClose={() => setModal(null)}
-          idItem={selectedItem.id}
-          titleItem={selectedItem.title}
-        />
-      )}
-      <FlatList<ItemDate>
-        data={searchItem}
-        keyExtractor={(item) => item.id.toString()}
-        renderItem={({ item }) => (
-          <View style={styles.itemsContainer}>
-            <Text>{item.title}</Text>
-            <View style={styles.iconContainer}>
-              <MaterialIcons
-                name="delete"
-                size={24}
-                color="black"
-                onPress={() => {
-                  setSelectedItem(item);
-                  setModal('delete');
-                }}
-              />
-              <MaterialIcons
-                name="edit"
-                size={24}
-                color="black"
-                onPress={() => {
-                  setSelectedItem(item);
-                  setModal('edit');
-                }}
-              />
-            </View>
-          </View>
-        )}
-      ></FlatList>
+      <DeleteModal
+        visible={modal === 'delete'}
+        onDelete={deleteItem}
+        closeModalDelete={onCloseModal}
+        idItem={selectedItem?.id}
+      />
+
+      <EditModal
+        visible={modal === 'edit'}
+        onEdit={editItem}
+        onClose={onCloseModal}
+        idItem={selectedItem?.id}
+        titleItem={selectedItem?.title}
+      />
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  itemsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  iconContainer: {
+    flexDirection: 'row',
+    gap: 10,
+  },
+});

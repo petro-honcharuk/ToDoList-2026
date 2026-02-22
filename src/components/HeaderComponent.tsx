@@ -18,7 +18,7 @@ export const HeaderComponent = ({ onPress, onSearch, searchQuery }: Props) => {
         placeholder="Search..."
         value={searchQuery}
         onChangeText={onSearch}
-      ></TextInput>
+      />
       <ButtonComponent
         title="Add"
         onPress={() => {
