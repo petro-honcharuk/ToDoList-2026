@@ -31,20 +31,21 @@ export const ButtonComponent = ({
 
 const styles = StyleSheet.create({
   title: {
-    fontSize: 10,
+    fontSize: 18,
     //fontWeight: 'bold',
     textAlign: 'center',
     color: 'black',
   },
   button: {
-    backgroundColor: '#007AFF',
-    paddingVertical: 12,
-    paddingHorizontal: 20,
-    borderRadius: 8,
+    backgroundColor: 'purple',
+    paddingVertical: 10,
+    paddingHorizontal: 10,
+    borderRadius: 5,
     elevation: 3,
-    width: 70,
-    height: 40,
-    margin: 5,
+    width: 85,
+    height: 38,
+    marginLeft: 16,
     alignItems: 'center',
+    justifyContent: 'center',
   },
 });

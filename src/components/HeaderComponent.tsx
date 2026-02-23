@@ -32,16 +32,15 @@ export const HeaderComponent = ({ onPress, onSearch, searchQuery }: Props) => {
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderBottomWidth: 2,
-    margin: 10,
+    //alignItems: 'center',
+    // justifyContent: 'center',
+    //borderWidth: 2,
   },
   input: {
-    height: 45,
+    height: 38,
     width: '80%',
-    borderWidth: 2,
-    borderRadius: 8,
-    margin: 5,
+    borderWidth: 1,
+    borderRadius: 5,
+    //margin: 5,
   },
 });

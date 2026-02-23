@@ -13,6 +13,8 @@ import { useToDo } from '../hooks/useToDo';
 import { styles } from '../style/style';
 import { ItemDate } from '../types/types';
 
+import { indexStyles } from './index.Styles';
+
 export const HomeScreen = () => {
   const {
     addItem,
@@ -26,69 +28,76 @@ export const HomeScreen = () => {
     setModal,
     modal,
   } = useToDo();
+
   return (
-    <View>
-      <TitleComponent title="ToDoList" />
-      <HeaderComponent
-        onPress={() => {
-          setModal('add');
-        }}
-        onSearch={setSearchText}
-        searchQuery={searchText}
-      />
-
-      <AddModal
-        visible={modal === 'add'}
-        onClose={() => setModal(null)}
-        onAdd={addItem}
-      />
-
-      {selectedItem && (
-        <DeleteModal
-          visible={modal === 'delete'}
-          onDelete={deleteItem}
-          closeModalDelete={() => setModal(null)}
-          idItem={selectedItem.id}
-        />
-      )}
-      {selectedItem && (
-        <EditModal
-          visible={modal === 'edit'}
-          onEdit={editItem}
-          onClose={() => setModal(null)}
-          idItem={selectedItem.id}
-          titleItem={selectedItem.title}
-        />
-      )}
-      <FlatList<ItemDate>
-        data={searchItem}
-        keyExtractor={(item) => item.id.toString()}
-        renderItem={({ item }) => (
-          <View style={styles.itemsContainer}>
-            <Text>{item.title}</Text>
-            <View style={styles.iconContainer}>
-              <MaterialIcons
-                name="delete"
-                size={24}
-                color="black"
-                onPress={() => {
-                  setSelectedItem(item);
-                  setModal('delete');
-                }}
-              />
-              <MaterialIcons
-                name="edit"
-                size={24}
-                color="black"
-                onPress={() => {
-                  setSelectedItem(item);
-                  setModal('edit');
-                }}
-              />
-            </View>
+    <View style={indexStyles.main}>
+      <View style={indexStyles.container}>
+        <View style={indexStyles.head}>
+          <TitleComponent title="TODO LIST" />
+          <View style={indexStyles.header}>
+            <HeaderComponent
+              onPress={() => {
+                setModal('add');
+              }}
+              onSearch={setSearchText}
+              searchQuery={searchText}
+            />
           </View>
+        </View>
+
+        <AddModal
+          visible={modal === 'add'}
+          onClose={() => setModal(null)}
+          onAdd={addItem}
+        />
+
+        {selectedItem && (
+          <DeleteModal
+            visible={modal === 'delete'}
+            onDelete={deleteItem}
+            closeModalDelete={() => setModal(null)}
+            idItem={selectedItem.id}
+          />
         )}
-      ></FlatList>
+        {selectedItem && (
+          <EditModal
+            visible={modal === 'edit'}
+            onEdit={editItem}
+            onClose={() => setModal(null)}
+            idItem={selectedItem.id}
+            titleItem={selectedItem.title}
+          />
+        )}
+        <FlatList<ItemDate>
+          data={searchItem}
+          keyExtractor={(item) => item.id.toString()}
+          renderItem={({ item }) => (
+            <View style={styles.itemsContainer}>
+              <Text>{item.title}</Text>
+              <View style={styles.iconContainer}>
+                <MaterialIcons
+                  name="delete"
+                  size={24}
+                  color="black"
+                  onPress={() => {
+                    setSelectedItem(item);
+                    setModal('delete');
+                  }}
+                />
+                <MaterialIcons
+                  name="edit"
+                  size={24}
+                  color="black"
+                  onPress={() => {
+                    setSelectedItem(item);
+                    setModal('edit');
+                  }}
+                />
+              </View>
+            </View>
+          )}
+        ></FlatList>
+      </View>
     </View>
   );
 };
