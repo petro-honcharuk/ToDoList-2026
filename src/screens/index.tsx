@@ -2,15 +2,17 @@ import React from 'react';
 
 import { FlatList, View, Text } from 'react-native';
 
+import Ionicons from '@expo/vector-icons/Ionicons';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import { useFonts } from 'expo-font';
 
-import { AddModal } from '../components/AddModal';
-import { DeleteModal } from '../components/DeleteModal';
-import { EditModal } from '../components/EditModal';
+import { EmptyState } from '../components/EmptyState';
 import { HeaderComponent } from '../components/HeaderComponent';
+import { AddModal } from '../components/modal/AddModal';
+import { DeleteModal } from '../components/modal/DeleteModal';
+import { EditModal } from '../components/modal/EditModal';
 import { TitleComponent } from '../components/TitleComponent';
 import { useToDo } from '../hooks/useToDo';
-import { styles } from '../style/style';
 import { ItemDate } from '../types/types';
 
 import { indexStyles } from './index.Styles';
@@ -28,6 +30,13 @@ export const HomeScreen = () => {
     setModal,
     modal,
   } = useToDo();
+  const [fontsLoaded] = useFonts({
+    'Kanit-Regular': require('../../assets/fonts/Kanit-Regular.ttf'),
+    'Kanit-Bold': require('../../assets/fonts/Kanit-Bold.ttf'),
+  });
+  if (!fontsLoaded) {
+    return null;
+  }
 
   return (
     <View style={indexStyles.main}>
@@ -68,35 +77,51 @@ export const HomeScreen = () => {
             titleItem={selectedItem.title}
           />
         )}
-        <FlatList<ItemDate>
-          data={searchItem}
-          keyExtractor={(item) => item.id.toString()}
-          renderItem={({ item }) => (
-            <View style={styles.itemsContainer}>
-              <Text>{item.title}</Text>
-              <View style={styles.iconContainer}>
-                <MaterialIcons
-                  name="delete"
-                  size={24}
-                  color="black"
-                  onPress={() => {
-                    setSelectedItem(item);
-                    setModal('delete');
-                  }}
-                />
-                <MaterialIcons
-                  name="edit"
-                  size={24}
-                  color="black"
-                  onPress={() => {
-                    setSelectedItem(item);
-                    setModal('edit');
-                  }}
-                />
+        <View style={indexStyles.BODY}>
+          <FlatList<ItemDate>
+            data={searchItem}
+            ListEmptyComponent={<EmptyState />}
+            contentContainerStyle={indexStyles.LIST}
+            keyExtractor={(item) => item.id.toString()}
+            renderItem={({ item }) => (
+              <View style={indexStyles.NOTE}>
+                <Text style={indexStyles.noteText}>{item.title}</Text>
+                <View style={indexStyles.iconContainer}>
+                  <MaterialIcons
+                    name="delete"
+                    size={18}
+                    color="#CDCDCD"
+                    style={indexStyles.icon}
+                    onPress={() => {
+                      setSelectedItem(item);
+                      setModal('delete');
+                    }}
+                  />
+                  <MaterialIcons
+                    name="edit"
+                    size={18}
+                    color="#CDCDCD"
+                    style={indexStyles.icon}
+                    onPress={() => {
+                      setSelectedItem(item);
+                      setModal('edit');
+                    }}
+                  />
+                </View>
               </View>
-            </View>
-          )}
-        ></FlatList>
+            )}
+          ></FlatList>
+
+          <Ionicons
+            name="add-circle"
+            size={50}
+            color="#6C63FF"
+            style={indexStyles.addButton}
+            onPress={() => {
+              setModal('add');
+            }}
+          />
+        </View>
       </View>
     </View>
   );

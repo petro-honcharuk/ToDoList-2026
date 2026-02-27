@@ -2,6 +2,8 @@ import React from 'react';
 
 import { StyleProp, StyleSheet, Text, TextStyle, View } from 'react-native';
 
+import { fonts } from '../theme/font';
+
 type Props = {
   title: string;
   style?: StyleProp<TextStyle>;
@@ -23,7 +25,6 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 26,
-    fontWeight: 'bold',
-    //borderWidth: 2,
+    fontFamily: fonts.bold,
   },
 });

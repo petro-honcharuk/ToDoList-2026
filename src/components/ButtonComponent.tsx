@@ -9,6 +9,8 @@ import {
   ViewStyle,
 } from 'react-native';
 
+import { fonts } from '../theme/font';
+
 type Props = {
   title: string;
   styleTitle?: StyleProp<TextStyle>;
@@ -32,19 +34,17 @@ export const ButtonComponent = ({
 const styles = StyleSheet.create({
   title: {
     fontSize: 18,
-    //fontWeight: 'bold',
+    fontFamily: fonts.regular,
     textAlign: 'center',
-    color: 'black',
   },
   button: {
-    backgroundColor: 'purple',
+    backgroundColor: '#6C63FF',
     paddingVertical: 10,
     paddingHorizontal: 10,
     borderRadius: 5,
     elevation: 3,
     width: 85,
     height: 38,
-    marginLeft: 16,
     alignItems: 'center',
     justifyContent: 'center',
   },
