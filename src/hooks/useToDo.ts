@@ -30,6 +30,15 @@ export const useToDo = () => {
       prev.map((item) => (item.id === id ? { ...item, title: newText } : item))
     );
   };
+  const onToggle = (id: number) => {
+    setListOfItem((prev) =>
+      prev.map((listOfItem) =>
+        listOfItem.id === id
+          ? { ...listOfItem, completted: !listOfItem.completted }
+          : listOfItem
+      )
+    );
+  };
 
   return {
     addItem,
@@ -42,5 +51,6 @@ export const useToDo = () => {
     editItem,
     setModal,
     modal,
+    onToggle,
   };
 };

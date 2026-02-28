@@ -1,14 +1,14 @@
 import React from 'react';
 
-import { FlatList, View, Text } from 'react-native';
+import { FlatList, View } from 'react-native';
 
 import Ionicons from '@expo/vector-icons/Ionicons';
-import MaterialIcons from '@expo/vector-icons/MaterialIcons';
-//import { useTheme } from '@react-navigation/native';
+//import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { useFonts } from 'expo-font';
 
 import { EmptyState } from '../components/EmptyState';
 import { HeaderComponent } from '../components/HeaderComponent';
+import { ItemComponent } from '../components/ItemComponent';
 import { AddModal } from '../components/modal/AddModal';
 import { DeleteModal } from '../components/modal/DeleteModal';
 import { EditModal } from '../components/modal/EditModal';
@@ -32,6 +32,7 @@ export const HomeScreen = () => {
     editItem,
     setModal,
     modal,
+    onToggle,
   } = useToDo();
   const [fontsLoaded] = useFonts({
     'Kanit-Regular': require('../../assets/fonts/Kanit-Regular.ttf'),
@@ -89,31 +90,18 @@ export const HomeScreen = () => {
             contentContainerStyle={indexStyles.LIST}
             keyExtractor={(item) => item.id.toString()}
             renderItem={({ item }) => (
-              <View style={indexStyles.NOTE}>
-                <Text style={indexStyles.noteText}>{item.title}</Text>
-                <View style={indexStyles.iconContainer}>
-                  <MaterialIcons
-                    name="delete"
-                    size={18}
-                    color="#CDCDCD"
-                    style={indexStyles.icon}
-                    onPress={() => {
-                      setSelectedItem(item);
-                      setModal('delete');
-                    }}
-                  />
-                  <MaterialIcons
-                    name="edit"
-                    size={18}
-                    color="#CDCDCD"
-                    style={indexStyles.icon}
-                    onPress={() => {
-                      setSelectedItem(item);
-                      setModal('edit');
-                    }}
-                  />
-                </View>
-              </View>
+              <ItemComponent
+                item={item}
+                onDelete={() => {
+                  setSelectedItem(item);
+                  setModal('delete');
+                }}
+                onEdit={() => {
+                  setSelectedItem(item);
+                  setModal('edit');
+                }}
+                onToggle={onToggle}
+              />
             )}
           ></FlatList>
 

@@ -66,4 +66,12 @@ export const createStyles = (colors: Colors) =>
       margin: 8,
       padding: 5,
     },
+    checkBox: {
+      width: 26,
+      height: 26,
+      borderWidth: 1,
+      borderRadius: 2,
+      borderColor: colors.borderColor,
+      tintColor: '#6C63FF',
+    },
   });
