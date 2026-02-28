@@ -3,6 +3,7 @@ import React from 'react';
 import { StyleProp, StyleSheet, Text, TextStyle, View } from 'react-native';
 
 import { fonts } from '../theme/font';
+import { useTheme } from '../theme/ThemeContext';
 
 type Props = {
   title: string;
@@ -10,9 +11,10 @@ type Props = {
 };
 
 export const TitleComponent = ({ title, style }: Props) => {
+  const { colors } = useTheme();
   return (
     <View style={styles.container}>
-      <Text style={[styles.title, style]}>{title}</Text>
+      <Text style={[styles.title, style, { color: colors.text }]}>{title}</Text>
     </View>
   );
 };

@@ -2,9 +2,14 @@ import React from 'react';
 
 import { StyleSheet, TextInput, View } from 'react-native';
 
+//import { useTheme } from '@react-navigation/native';
+
+import { Colors } from '../theme/colors';
 import { fonts } from '../theme/font';
+import { useTheme } from '../theme/ThemeContext';
 
 import { ButtonComponent } from './ButtonComponent';
+import { ButtonThemeComponent } from './ButtonThemeComponent';
 
 type Props = {
   onPress: () => void;
@@ -13,6 +18,9 @@ type Props = {
 };
 
 export const HeaderComponent = ({ onPress, onSearch, searchQuery }: Props) => {
+  const { colors } = useTheme();
+
+  const styles = createStyles(colors);
   return (
     <View style={styles.container}>
       <TextInput
@@ -27,26 +35,34 @@ export const HeaderComponent = ({ onPress, onSearch, searchQuery }: Props) => {
           onPress();
         }}
       />
+      <ButtonThemeComponent />
     </View>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'row',
-    gap: 16,
-  },
-  input: {
-    height: 38,
-    width: '80%',
-    borderWidth: 1,
-    borderColor: '#6C63FF',
-    borderRadius: 5,
-    paddingTop: 8,
-    paddingRight: 16,
-    paddingLeft: 16,
-    paddingBottom: 8,
-    fontSize: 16,
-    fontFamily: fonts.regular,
-  },
-});
+const createStyles = (colors: Colors) =>
+  StyleSheet.create({
+    container: {
+      flexDirection: 'row',
+      gap: 16,
+      backgroundColor: colors.background,
+    },
+    input: {
+      height: 38,
+      width: '80%',
+      borderWidth: 1,
+      borderColor: colors.borderColor,
+      borderRadius: 5,
+      paddingTop: 8,
+      paddingRight: 16,
+      paddingLeft: 16,
+      paddingBottom: 8,
+      fontSize: 16,
+      fontFamily: fonts.regular,
+      color: colors.text,
+    },
+    themeImage: {
+      height: 38,
+      width: 38,
+    },
+  });

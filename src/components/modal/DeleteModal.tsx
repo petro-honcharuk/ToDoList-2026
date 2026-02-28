@@ -2,10 +2,12 @@ import React from 'react';
 
 import { View } from 'react-native';
 
+import { useTheme } from '@/src/theme/ThemeContext';
+
 import { ButtonComponent } from '../ButtonComponent';
 import { ModalComponent } from '../modal/ModalComponent';
 
-import { addModalStyle } from './modal.Style';
+import { createStyles } from './modal.Style';
 
 type Props = {
   visible: boolean;
@@ -20,19 +22,21 @@ export const DeleteModal = ({
   closeModalDelete,
   idItem,
 }: Props) => {
+  const { colors } = useTheme();
+  const modalStyle = createStyles(colors);
   return (
     <ModalComponent visible={visible} title="DELETE NOTE">
-      <View style={addModalStyle.buttonContainerModal}>
+      <View style={modalStyle.buttonContainerModal}>
         <ButtonComponent
           title="Close"
           onPress={closeModalDelete}
-          styleButton={addModalStyle.buttonCancelContent}
-          styleTitle={addModalStyle.buttonCancelTitle}
+          styleButton={modalStyle.buttonCancelContent}
+          styleTitle={modalStyle.buttonCancelTitle}
         />
         <ButtonComponent
           title="Delete"
-          styleButton={addModalStyle.buttonApllyContent}
-          styleTitle={addModalStyle.buttonApllyTitle}
+          styleButton={modalStyle.buttonApllyContent}
+          styleTitle={modalStyle.buttonApllyTitle}
           onPress={() => {
             onDelete(idItem);
             closeModalDelete();

@@ -12,7 +12,7 @@ export const useToDo = () => {
     return Math.floor(Math.random() * (100000 - 0 + 1)) + 0;
   };
   const addItem = (text: string) => {
-    setListOfItem([...listOfItem, { id: getId(), title: text }]);
+    if (text) setListOfItem([...listOfItem, { id: getId(), title: text }]);
   };
   const searchItem = useMemo(() => {
     if (searchText === '') return listOfItem;

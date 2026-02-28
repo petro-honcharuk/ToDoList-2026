@@ -4,6 +4,7 @@ import { FlatList, View, Text } from 'react-native';
 
 import Ionicons from '@expo/vector-icons/Ionicons';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+//import { useTheme } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
 
 import { EmptyState } from '../components/EmptyState';
@@ -13,11 +14,13 @@ import { DeleteModal } from '../components/modal/DeleteModal';
 import { EditModal } from '../components/modal/EditModal';
 import { TitleComponent } from '../components/TitleComponent';
 import { useToDo } from '../hooks/useToDo';
+import { useTheme } from '../theme/ThemeContext';
 import { ItemDate } from '../types/types';
 
-import { indexStyles } from './index.Styles';
+import { createStyles } from './index.Styles';
 
 export const HomeScreen = () => {
+  const { colors } = useTheme();
   const {
     addItem,
     searchItem,
@@ -37,6 +40,8 @@ export const HomeScreen = () => {
   if (!fontsLoaded) {
     return null;
   }
+  //const { colors } = useTheme();
+  const indexStyles = createStyles(colors);
 
   return (
     <View style={indexStyles.main}>
