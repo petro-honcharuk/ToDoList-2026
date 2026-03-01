@@ -4,9 +4,17 @@ import { ItemDate } from '../types/types';
 
 const getRecordID = () => Math.floor(Math.random() * (100000 - 0 + 1)) + 0;
 
+const demoList = [
+  { id: 1, title: 'Buy groceries', completed: false },
+  { id: 2, title: 'Finish the project', completed: true },
+  { id: 3, title: 'Call the doctor', completed: false },
+  { id: 4, title: 'Read the book', completed: true },
+  { id: 5, title: 'Go to the gym', completed: false },
+];
+
 export const useToDo = () => {
   const [selectedItem, setSelectedItem] = useState<ItemDate | null>(null);
-  const [listOfItem, setListOfItem] = useState<ItemDate[]>([]);
+  const [listOfItem, setListOfItem] = useState<ItemDate[]>(demoList);
   const [searchText, setSearchText] = useState('');
   const [modal, setModal] = useState<'add' | 'edit' | 'delete' | null>(null);
   const [filter, setFilter] = useState<'all' | 'completed' | 'incomplete'>(
