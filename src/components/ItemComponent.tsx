@@ -22,7 +22,7 @@ export const ItemComponent = ({ item, onDelete, onEdit, onToggle }: Props) => {
         <View style={indexStyles.checkBox}></View>
       </Pressable> */}
       <Checkbox
-        value={item.completted}
+        value={item.completed}
         onValueChange={() => {
           onToggle(item.id);
         }}

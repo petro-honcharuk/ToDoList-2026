@@ -2,11 +2,11 @@ import React from 'react';
 
 import { TouchableOpacity, Image, View } from 'react-native';
 
-import { ICONS } from '../constants/icons';
-import { createStyles, useStyles } from '../theme/hooks/useStyles.hook';
-import { useTheme } from '../theme/hooks/useTheme.hook';
+import { ICONS } from '../../constants/icons';
+import { createStyles, useStyles } from '../../theme/hooks/useStyles.hook';
+import { useTheme } from '../../theme/hooks/useTheme.hook';
 
-export const ButtonThemeComponent = () => {
+export const ThemeSwitcher = () => {
   const { theme, setTheme } = useTheme();
   const styles = useStyles(stylesheet);
 

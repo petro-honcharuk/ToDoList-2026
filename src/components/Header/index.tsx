@@ -2,30 +2,41 @@ import React from 'react';
 
 import { TextInput, View } from 'react-native';
 
-import { createStyles, useStyles } from '../theme/hooks/useStyles.hook';
+import { createStyles, useStyles } from '@/src/theme/hooks/useStyles.hook';
+
+import { TitleComponent } from '../TitleComponent';
 
 import { ButtonMenu } from './ButtonMenu';
-import { ButtonThemeComponent } from './ButtonThemeComponent';
+import type { ButtonMenuProps } from './ButtonMenu';
+import { ThemeSwitcher } from './ThemeSwitcher';
 
 type Props = {
   onPress?: () => void;
   onSearch: (query: string) => void;
   searchQuery: string;
-};
+} & ButtonMenuProps;
 
-export const HeaderComponent = ({ onSearch, searchQuery }: Props) => {
+export const HeaderComponent = ({
+  onSearch,
+  searchQuery,
+  filter,
+  setFilter,
+}: Props) => {
   const styles = useStyles(stylesheet);
 
   return (
-    <View style={styles.container}>
-      <TextInput
-        style={styles.input}
-        placeholder="Search note..."
-        value={searchQuery}
-        onChangeText={onSearch}
-      />
-      <ButtonMenu />
-      <ButtonThemeComponent />
+    <View>
+      <TitleComponent title="TODO LIST" />
+      <View style={styles.container}>
+        <TextInput
+          style={styles.input}
+          placeholder="Search note..."
+          value={searchQuery}
+          onChangeText={onSearch}
+        />
+        <ButtonMenu filter={filter} setFilter={setFilter} />
+        <ThemeSwitcher />
+      </View>
     </View>
   );
 };

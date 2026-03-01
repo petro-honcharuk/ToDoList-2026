@@ -6,16 +6,15 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import { useFonts } from 'expo-font';
 
 import { EmptyState } from '../components/EmptyState';
-import { HeaderComponent } from '../components/HeaderComponent';
+import { HeaderComponent } from '../components/Header';
+import { CustomInput } from '../components/inputs/CInput';
 import { ItemComponent } from '../components/ItemComponent';
 import { AddModal } from '../components/modal/AddModal';
 import { DeleteModal } from '../components/modal/DeleteModal';
 import { EditModal } from '../components/modal/EditModal';
-import { TitleComponent } from '../components/TitleComponent';
 import { FONTS } from '../constants/fonts';
 import { useToDo } from '../hooks/useToDo';
 import { createStyles, useStyles } from '../theme/hooks/useStyles.hook';
-import { ItemDate } from '../types/types';
 
 export const HomeScreen = () => {
   const styles = useStyles(stylesheet);
@@ -31,8 +30,11 @@ export const HomeScreen = () => {
     editItem,
     setModal,
     modal,
+    filter,
+    setFilter,
     onToggle,
   } = useToDo();
+
   const [fontsLoaded] = useFonts({
     'Kanit-Regular': FONTS.REGULAR,
     'Kanit-Bold': FONTS.BOLD,
@@ -45,44 +47,18 @@ export const HomeScreen = () => {
   return (
     <View style={styles.main}>
       <View style={styles.container}>
-        <View style={styles.head}>
-          <TitleComponent title="TODO LIST" />
-          <View style={styles.header}>
-            <HeaderComponent
-              onPress={() => {
-                setModal('add');
-              }}
-              onSearch={setSearchText}
-              searchQuery={searchText}
-            />
-          </View>
-        </View>
-
-        <AddModal
-          visible={modal === 'add'}
-          onClose={() => setModal(null)}
-          onAdd={addItem}
+        <HeaderComponent
+          onPress={() => {
+            setModal('add');
+          }}
+          onSearch={setSearchText}
+          searchQuery={searchText}
+          filter={filter}
+          setFilter={setFilter}
         />
 
-        {selectedItem && (
-          <DeleteModal
-            visible={modal === 'delete'}
-            onDelete={deleteItem}
-            closeModalDelete={() => setModal(null)}
-            idItem={selectedItem.id}
-          />
-        )}
-        {selectedItem && (
-          <EditModal
-            visible={modal === 'edit'}
-            onEdit={editItem}
-            onClose={() => setModal(null)}
-            idItem={selectedItem.id}
-            titleItem={selectedItem.title}
-          />
-        )}
         <View style={styles.BODY}>
-          <FlatList<ItemDate>
+          <FlatList
             data={searchItem}
             ListEmptyComponent={<EmptyState />}
             contentContainerStyle={styles.LIST}
@@ -102,7 +78,6 @@ export const HomeScreen = () => {
               />
             )}
           />
-
           <Ionicons
             name="add-circle"
             size={50}
@@ -114,6 +89,30 @@ export const HomeScreen = () => {
           />
         </View>
       </View>
+
+      <AddModal
+        visible={modal === 'add'}
+        onClose={() => setModal(null)}
+        onAdd={addItem}
+      />
+
+      {selectedItem && (
+        <DeleteModal
+          visible={modal === 'delete'}
+          onDelete={deleteItem}
+          closeModalDelete={() => setModal(null)}
+          idItem={selectedItem.id}
+        />
+      )}
+      {selectedItem && (
+        <EditModal
+          visible={modal === 'edit'}
+          onEdit={editItem}
+          onClose={() => setModal(null)}
+          idItem={selectedItem.id}
+          titleItem={selectedItem.title}
+        />
+      )}
     </View>
   );
 };

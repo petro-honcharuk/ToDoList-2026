@@ -6,24 +6,49 @@ import {
   Menu,
   MenuOption,
   MenuOptions,
+  MenuOptionsCustomStyle,
   MenuTrigger,
 } from 'react-native-popup-menu';
 
-export const ButtonMenu = () => {
+export type ButtonMenuProps = {
+  filter: 'all' | 'completed' | 'incomplete';
+  setFilter: (filter: 'all' | 'completed' | 'incomplete') => void;
+};
+
+const options = [
+  { value: 'all', label: 'All' },
+  { value: 'completed', label: 'Completed' },
+  { value: 'incomplete', label: 'Incomplete' },
+];
+
+export const ButtonMenu = ({ filter, setFilter }: ButtonMenuProps) => {
+  const selectedFilter = options.find(
+    (option) => option.value === filter
+  )?.label;
+
+  const onSelect = (value: 'all' | 'completed' | 'incomplete') => {
+    setFilter(value);
+  };
+
   return (
-    <Menu>
+    <Menu onSelect={onSelect}>
       <MenuTrigger style={styles.button}>
-        <Text style={styles.buttonText}>All</Text>
+        <Text style={styles.buttonText}>{selectedFilter}</Text>
       </MenuTrigger>
       <MenuOptions customStyles={optionsStyles}>
-        <MenuOption text="All" />
-        <MenuOption text="Complette" />
-        <MenuOption text="Incomplette" />
+        {options.map((option) => (
+          <MenuOption
+            key={option.value}
+            value={option.value}
+            text={option.label}
+          />
+        ))}
       </MenuOptions>
     </Menu>
   );
 };
-const optionsStyles = {
+
+const optionsStyles: MenuOptionsCustomStyle = {
   optionsContainer: {
     height: 95,
     width: 84,
@@ -33,14 +58,11 @@ const optionsStyles = {
     borderWidth: 1,
     borderColor: '#6C63FF',
     marginTop: 38,
-    textAlign: 'center',
   },
-
   optionText: {
     color: '#6C63FF',
     fontSize: 10,
   },
-
   optionWrapper: {
     padding: 8,
   },
