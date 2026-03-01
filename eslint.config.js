@@ -21,6 +21,13 @@ module.exports = defineConfig([
         },
       ],
       'react-native/no-inline-styles': 'warn',
+      'react/self-closing-comp': [
+        'warn',
+        {
+          component: true,
+          html: true,
+        },
+      ],
     },
   },
   {

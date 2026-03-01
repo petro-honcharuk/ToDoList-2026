@@ -103,7 +103,7 @@ export const HomeScreen = () => {
                 onToggle={onToggle}
               />
             )}
-          ></FlatList>
+          />
 
           <Ionicons
             name="add-circle"
