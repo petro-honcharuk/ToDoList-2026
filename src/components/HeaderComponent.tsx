@@ -2,22 +2,20 @@ import React from 'react';
 
 import { StyleSheet, TextInput, View } from 'react-native';
 
-//import { useTheme } from '@react-navigation/native';
-
 import { Colors } from '../theme/colors';
 import { fonts } from '../theme/font';
 import { useTheme } from '../theme/ThemeContext';
 
-import { ButtonComponent } from './ButtonComponent';
+import { ButtonMenu } from './ButtonMenu';
 import { ButtonThemeComponent } from './ButtonThemeComponent';
 
 type Props = {
-  onPress: () => void;
+  onPress?: () => void;
   onSearch: (query: string) => void;
   searchQuery: string;
 };
 
-export const HeaderComponent = ({ onPress, onSearch, searchQuery }: Props) => {
+export const HeaderComponent = ({ onSearch, searchQuery }: Props) => {
   const { colors } = useTheme();
 
   const styles = createStyles(colors);
@@ -29,12 +27,7 @@ export const HeaderComponent = ({ onPress, onSearch, searchQuery }: Props) => {
         value={searchQuery}
         onChangeText={onSearch}
       ></TextInput>
-      <ButtonComponent
-        title="All"
-        onPress={() => {
-          onPress();
-        }}
-      />
+      <ButtonMenu />
       <ButtonThemeComponent />
     </View>
   );

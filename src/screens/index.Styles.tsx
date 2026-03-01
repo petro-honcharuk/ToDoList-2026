@@ -72,6 +72,6 @@ export const createStyles = (colors: Colors) =>
       borderWidth: 1,
       borderRadius: 2,
       borderColor: colors.borderColor,
-      tintColor: '#6C63FF',
+      //tintColor: '#6C63FF',
     },
   });

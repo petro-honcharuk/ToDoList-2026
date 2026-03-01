@@ -7,6 +7,9 @@ export const useToDo = () => {
   const [listOfItem, setListOfItem] = useState<ItemDate[]>([]);
   const [searchText, setSearchText] = useState('');
   const [modal, setModal] = useState<'add' | 'edit' | 'delete' | null>(null);
+  // const [filter, setFilter] = useState<
+  //   'all' | 'completted' | 'incompletted' | null
+  // >(null);
 
   const getId = () => {
     return Math.floor(Math.random() * (100000 - 0 + 1)) + 0;
@@ -14,6 +17,7 @@ export const useToDo = () => {
   const addItem = (text: string) => {
     if (text) setListOfItem([...listOfItem, { id: getId(), title: text }]);
   };
+
   const searchItem = useMemo(() => {
     if (searchText === '') return listOfItem;
     return listOfItem.filter((item) =>

@@ -35,5 +35,6 @@ const createStyles = (colors: Colors) =>
       fontSize: 20,
       color: colors.text,
       fontFamily: fonts.bold,
+      marginTop: 40,
     },
   });
