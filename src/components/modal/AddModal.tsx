@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 
 import { TextInput, View } from 'react-native';
 
-import { useTheme } from '@/src/theme/ThemeContext';
+import { useStyles } from '@/src/theme/hooks/useStyles.hook';
 
 import { ButtonComponent } from '../ButtonComponent';
 import { ModalComponent } from '../modal/ModalComponent';
 
-import { createStyles } from './modal.Style';
+import { stylesheet } from './modal.style';
 
 type Props = {
   visible: boolean;
@@ -17,28 +17,28 @@ type Props = {
 
 export const AddModal = ({ visible, onClose, onAdd }: Props) => {
   const [text, setText] = useState('');
-  const { colors } = useTheme();
-  const modalStyle = createStyles(colors);
+  const styles = useStyles(stylesheet);
+
   return (
     <ModalComponent visible={visible} title="NEW NOTE">
       <TextInput
-        style={modalStyle.input}
+        style={styles.input}
         placeholder="Add new note..."
         value={text}
         onChangeText={setText}
       />
 
-      <View style={modalStyle.buttonContainerModal}>
+      <View style={styles.buttonContainerModal}>
         <ButtonComponent
           title="CANCEL"
           onPress={onClose}
-          styleButton={modalStyle.buttonCancelContent}
-          styleTitle={modalStyle.buttonCancelTitle}
+          styleButton={styles.buttonCancelContent}
+          styleTitle={styles.buttonCancelTitle}
         />
         <ButtonComponent
-          title="APLLY"
-          styleButton={modalStyle.buttonApllyContent}
-          styleTitle={modalStyle.buttonApllyTitle}
+          title="APPLY"
+          styleButton={styles.buttonApllyContent}
+          styleTitle={styles.buttonApllyTitle}
           onPress={() => {
             onAdd(text);
             setText('');

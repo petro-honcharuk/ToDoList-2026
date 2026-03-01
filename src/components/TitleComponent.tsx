@@ -1,9 +1,8 @@
 import React from 'react';
 
-import { StyleProp, StyleSheet, Text, TextStyle, View } from 'react-native';
+import { StyleProp, Text, TextStyle, View } from 'react-native';
 
-import { fonts } from '../theme/font';
-import { useTheme } from '../theme/ThemeContext';
+import { createStyles, useStyles } from '../theme/hooks/useStyles.hook';
 
 type Props = {
   title: string;
@@ -11,15 +10,15 @@ type Props = {
 };
 
 export const TitleComponent = ({ title, style }: Props) => {
-  const { colors } = useTheme();
+  const styles = useStyles(stylesheet);
   return (
     <View style={styles.container}>
-      <Text style={[styles.title, style, { color: colors.text }]}>{title}</Text>
+      <Text style={[styles.title, style]}>{title}</Text>
     </View>
   );
 };
 
-const styles = StyleSheet.create({
+const stylesheet = createStyles((theme) => ({
   container: {
     flex: 1,
     alignItems: 'center',
@@ -27,6 +26,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 26,
-    fontFamily: fonts.bold,
+    fontFamily: theme.fonts.bold,
+    color: theme.colors.text,
   },
-});
+}));

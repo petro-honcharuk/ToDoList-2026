@@ -2,11 +2,11 @@ import React, { useState, useEffect } from 'react';
 
 import { View, TextInput } from 'react-native';
 
-import { useTheme } from '@/src/theme/ThemeContext';
+import { useStyles } from '@/src/theme/hooks/useStyles.hook';
 
 import { ButtonComponent } from '../ButtonComponent';
 
-import { createStyles } from './modal.Style';
+import { stylesheet } from './modal.style';
 import { ModalComponent } from './ModalComponent';
 
 type Props = {
@@ -25,8 +25,7 @@ export const EditModal = ({
   titleItem,
 }: Props) => {
   const [text, setText] = useState('');
-  const { colors } = useTheme();
-  const modalStyle = createStyles(colors);
+  const styles = useStyles(stylesheet);
 
   useEffect(() => {
     if (titleItem) {
@@ -36,19 +35,19 @@ export const EditModal = ({
 
   return (
     <ModalComponent visible={visible} title="EDIT NOTE">
-      <TextInput style={modalStyle.input} value={text} onChangeText={setText} />
-      <View style={modalStyle.buttonContainerModal}>
+      <TextInput style={styles.input} value={text} onChangeText={setText} />
+      <View style={styles.buttonContainerModal}>
         <ButtonComponent
           title="Close"
           onPress={onClose}
-          styleButton={modalStyle.buttonCancelContent}
-          styleTitle={modalStyle.buttonCancelTitle}
+          styleButton={styles.buttonCancelContent}
+          styleTitle={styles.buttonCancelTitle}
         />
 
         <ButtonComponent
           title="Edit"
-          styleButton={modalStyle.buttonApllyContent}
-          styleTitle={modalStyle.buttonApllyTitle}
+          styleButton={styles.buttonApllyContent}
+          styleTitle={styles.buttonApllyTitle}
           onPress={() => {
             onEdit(idItem, text);
             onClose();

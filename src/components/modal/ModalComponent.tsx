@@ -2,11 +2,11 @@ import React, { PropsWithChildren } from 'react';
 
 import { View, Modal } from 'react-native';
 
-import { useTheme } from '@/src/theme/ThemeContext';
+import { useStyles } from '@/src/theme/hooks/useStyles.hook';
 
 import { TitleComponent } from '.././TitleComponent';
 
-import { createStyles } from './modal.Style';
+import { stylesheet } from './modal.style';
 
 type Props = {
   visible: boolean;
@@ -18,14 +18,13 @@ export const ModalComponent = ({
   title,
   children,
 }: PropsWithChildren<Props>) => {
-  const { colors } = useTheme();
-  const modalStyle = createStyles(colors);
+  const styles = useStyles(stylesheet);
 
   return (
     <Modal visible={visible} animationType="slide" transparent={true}>
-      <View style={modalStyle.modal}>
-        <View style={modalStyle.POPUP}>
-          <TitleComponent title={title} style={modalStyle.text} />
+      <View style={styles.modal}>
+        <View style={styles.popup}>
+          <TitleComponent title={title} style={styles.title} />
           {children}
         </View>
       </View>

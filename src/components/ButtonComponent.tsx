@@ -2,14 +2,13 @@ import React from 'react';
 
 import {
   StyleProp,
-  StyleSheet,
   Text,
   TextStyle,
   TouchableOpacity,
   ViewStyle,
 } from 'react-native';
 
-import { fonts } from '../theme/font';
+import { createStyles, useStyles } from '../theme/hooks/useStyles.hook';
 
 type Props = {
   title: string;
@@ -24,6 +23,7 @@ export const ButtonComponent = ({
   styleButton,
   onPress,
 }: Props) => {
+  const styles = useStyles(stylesheet);
   return (
     <TouchableOpacity style={[styles.button, styleButton]} onPress={onPress}>
       <Text style={[styles.title, styleTitle]}>{title}</Text>
@@ -31,10 +31,10 @@ export const ButtonComponent = ({
   );
 };
 
-const styles = StyleSheet.create({
+const stylesheet = createStyles((theme) => ({
   title: {
     fontSize: 18,
-    fontFamily: fonts.regular,
+    fontFamily: theme.fonts.regular,
     textAlign: 'center',
     color: '#F7F7F7',
   },
@@ -49,4 +49,4 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-});
+}));

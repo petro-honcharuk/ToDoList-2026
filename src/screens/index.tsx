@@ -3,7 +3,6 @@ import React from 'react';
 import { FlatList, View } from 'react-native';
 
 import Ionicons from '@expo/vector-icons/Ionicons';
-//import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { useFonts } from 'expo-font';
 
 import { EmptyState } from '../components/EmptyState';
@@ -13,14 +12,14 @@ import { AddModal } from '../components/modal/AddModal';
 import { DeleteModal } from '../components/modal/DeleteModal';
 import { EditModal } from '../components/modal/EditModal';
 import { TitleComponent } from '../components/TitleComponent';
+import { FONTS } from '../constants/fonts';
 import { useToDo } from '../hooks/useToDo';
-import { useTheme } from '../theme/ThemeContext';
+import { createStyles, useStyles } from '../theme/hooks/useStyles.hook';
 import { ItemDate } from '../types/types';
 
-import { createStyles } from './index.Styles';
-
 export const HomeScreen = () => {
-  const { colors } = useTheme();
+  const styles = useStyles(stylesheet);
+
   const {
     addItem,
     searchItem,
@@ -35,21 +34,20 @@ export const HomeScreen = () => {
     onToggle,
   } = useToDo();
   const [fontsLoaded] = useFonts({
-    'Kanit-Regular': require('../../assets/fonts/Kanit-Regular.ttf'),
-    'Kanit-Bold': require('../../assets/fonts/Kanit-Bold.ttf'),
+    'Kanit-Regular': FONTS.REGULAR,
+    'Kanit-Bold': FONTS.BOLD,
   });
+
   if (!fontsLoaded) {
     return null;
   }
-  //const { colors } = useTheme();
-  const indexStyles = createStyles(colors);
 
   return (
-    <View style={indexStyles.main}>
-      <View style={indexStyles.container}>
-        <View style={indexStyles.head}>
+    <View style={styles.main}>
+      <View style={styles.container}>
+        <View style={styles.head}>
           <TitleComponent title="TODO LIST" />
-          <View style={indexStyles.header}>
+          <View style={styles.header}>
             <HeaderComponent
               onPress={() => {
                 setModal('add');
@@ -83,11 +81,11 @@ export const HomeScreen = () => {
             titleItem={selectedItem.title}
           />
         )}
-        <View style={indexStyles.BODY}>
+        <View style={styles.BODY}>
           <FlatList<ItemDate>
             data={searchItem}
             ListEmptyComponent={<EmptyState />}
-            contentContainerStyle={indexStyles.LIST}
+            contentContainerStyle={styles.LIST}
             keyExtractor={(item) => item.id.toString()}
             renderItem={({ item }) => (
               <ItemComponent
@@ -109,7 +107,7 @@ export const HomeScreen = () => {
             name="add-circle"
             size={50}
             color="#6C63FF"
-            style={indexStyles.addButton}
+            style={styles.addButton}
             onPress={() => {
               setModal('add');
             }}
@@ -119,3 +117,75 @@ export const HomeScreen = () => {
     </View>
   );
 };
+
+const stylesheet = createStyles((theme) => ({
+  main: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: theme.colors.background,
+  },
+  container: {
+    width: '50%',
+    height: '100%',
+    backgroundColor: theme.colors.background,
+  },
+  head: {
+    height: '20%',
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    backgroundColor: theme.colors.background,
+  },
+
+  header: {
+    width: '100%',
+  },
+  BODY: {
+    flex: 1,
+  },
+  LIST: {
+    flex: 1,
+    width: '70%',
+    paddingBottom: 100,
+    marginTop: '4%',
+    marginLeft: '15%',
+  },
+  addButton: {
+    position: 'absolute',
+    right: 20,
+    bottom: 20,
+  },
+  NOTE: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    width: '100%',
+    marginVertical: 5,
+    borderBottomWidth: 1,
+    borderColor: theme.colors.borderColor,
+  },
+  noteText: {
+    flex: 1,
+    fontSize: 20,
+    fontFamily: theme.fonts.regular,
+    padding: 20,
+    color: theme.colors.text,
+  },
+  iconContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  icon: {
+    margin: 8,
+    padding: 5,
+  },
+  checkBox: {
+    width: 26,
+    height: 26,
+    borderWidth: 1,
+    borderRadius: 2,
+    borderColor: theme.colors.borderColor,
+    //tintColor: '#6C63FF',
+  },
+}));

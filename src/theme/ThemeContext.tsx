@@ -1,31 +1,21 @@
-import React, { createContext, useState, useContext } from 'react';
+import React, { createContext, useState } from 'react';
 
-import { ligthColor, darkColor } from '../theme/colors';
-import { Theme } from '../types/types';
+import { Theme, ThemeContextType, VariantTheme } from './types';
+import { themeVariants } from './variants';
 
-type ThemeContextType = {
-  theme: Theme;
-  colors: typeof ligthColor;
-  toggleTheme: () => void;
-};
-const ThemeContext = createContext<ThemeContextType | null>(null);
+export const ThemeContext = createContext<ThemeContextType | null>(null);
 
 export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
-  const [theme, setTheme] = useState<Theme>('ligth');
-  const toggleTheme = () => {
-    setTheme((prev) => (prev === 'ligth' ? 'dark' : 'ligth'));
+  const [theme, updateTheme] = useState<Theme>(themeVariants.light);
+
+  const setTheme = (theme: VariantTheme) => {
+    const currentTheme = themeVariants[theme];
+    updateTheme(currentTheme);
   };
-  const colors = theme === 'ligth' ? ligthColor : darkColor;
+
   return (
-    <ThemeContext.Provider value={{ theme, colors, toggleTheme }}>
+    <ThemeContext.Provider value={{ theme, setTheme }}>
       {children}
     </ThemeContext.Provider>
   );
-};
-export const useTheme = () => {
-  const context = useContext(ThemeContext);
-  if (!context) {
-    throw new Error('useTheme must be used inside ThemeProvider');
-  }
-  return context;
 };
