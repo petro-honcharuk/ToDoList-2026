@@ -13,7 +13,7 @@ type Props = {
   visible: boolean;
   onDelete: (id: number) => void;
   closeModalDelete: () => void;
-  idItem: number;
+  idItem: number | undefined;
 };
 
 export const DeleteModal = ({
@@ -23,6 +23,11 @@ export const DeleteModal = ({
   idItem,
 }: Props) => {
   const styles = useStyles(stylesheet);
+  const handlePressDelete = () => {
+    if (!idItem) return;
+    onDelete(idItem);
+    closeModalDelete();
+  };
   return (
     <ModalComponent visible={visible} title="DELETE NOTE">
       <View style={styles.buttonContainerModal}>
@@ -36,10 +41,7 @@ export const DeleteModal = ({
           title="Delete"
           styleButton={styles.buttonApllyContent}
           styleTitle={styles.buttonApllyTitle}
-          onPress={() => {
-            onDelete(idItem);
-            closeModalDelete();
-          }}
+          onPress={handlePressDelete}
         />
       </View>
     </ModalComponent>

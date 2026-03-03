@@ -13,8 +13,8 @@ type Props = {
   visible: boolean;
   onEdit: (id: number, title: string) => void;
   onClose: () => void;
-  idItem: number;
-  titleItem: string;
+  idItem: number | undefined;
+  titleItem: string | undefined;
 };
 
 export const EditModal = ({
@@ -24,14 +24,19 @@ export const EditModal = ({
   idItem,
   titleItem,
 }: Props) => {
-  const [text, setText] = useState('');
+  const [text, setText] = useState(titleItem);
   const styles = useStyles(stylesheet);
 
   useEffect(() => {
-    if (titleItem) {
+    if (visible) {
       setText(titleItem);
     }
-  }, [titleItem]);
+  }, [visible, titleItem]);
+  const handlerPressEdit = () => {
+    if (!idItem || !text) return;
+    onEdit(idItem, text);
+    onClose();
+  };
 
   return (
     <ModalComponent visible={visible} title="EDIT NOTE">
@@ -48,10 +53,7 @@ export const EditModal = ({
           title="Edit"
           styleButton={styles.buttonApllyContent}
           styleTitle={styles.buttonApllyTitle}
-          onPress={() => {
-            onEdit(idItem, text);
-            onClose();
-          }}
+          onPress={handlerPressEdit}
         />
       </View>
     </ModalComponent>

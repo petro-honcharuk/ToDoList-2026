@@ -7,6 +7,7 @@ export type Colors = {
   borderColor: string;
   borderColorButton: string;
   primary: string;
+  textButtonAdd: string;
 };
 
 export type Fonts = {

@@ -9,6 +9,7 @@ export const darkTheme: Theme = {
     borderColor: '#6C63FF',
     borderColorButton: '#6C63FF',
     primary: '#6C63FF',
+    textButtonAdd: '#F7F7F7',
   },
   fonts: {
     regular: 'Kanit-Regular',

@@ -1,10 +1,8 @@
 import React, { PropsWithChildren } from 'react';
 
-import { View, Modal } from 'react-native';
+import { View, Modal, Text } from 'react-native';
 
 import { useStyles } from '@/src/theme/hooks/useStyles.hook';
-
-import { TitleComponent } from '.././TitleComponent';
 
 import { stylesheet } from './modal.style';
 
@@ -24,7 +22,9 @@ export const ModalComponent = ({
     <Modal visible={visible} animationType="slide" transparent={true}>
       <View style={styles.modal}>
         <View style={styles.popup}>
-          <TitleComponent title={title} style={styles.title} />
+          <View style={styles.titleContainer}>
+            <Text style={styles.title}>{title}</Text>
+          </View>
           {children}
         </View>
       </View>

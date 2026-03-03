@@ -17,10 +17,7 @@ type Props = {
 export const ItemComponent = ({ item, onDelete, onEdit, onToggle }: Props) => {
   const styles = useStyles(stylesheet);
   return (
-    <View style={styles.NOTE}>
-      {/* <Pressable>
-        <View style={indexStyles.checkBox}></View>
-      </Pressable> */}
+    <View style={styles.note}>
       <Checkbox
         value={item.completed}
         onValueChange={() => {
@@ -52,44 +49,7 @@ export const ItemComponent = ({ item, onDelete, onEdit, onToggle }: Props) => {
 };
 
 const stylesheet = createStyles((theme) => ({
-  main: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: theme.colors.background,
-  },
-  container: {
-    width: '50%',
-    height: '100%',
-    backgroundColor: theme.colors.background,
-  },
-  head: {
-    height: '20%',
-    width: '100%',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    backgroundColor: theme.colors.background,
-  },
-
-  header: {
-    width: '100%',
-  },
-  BODY: {
-    flex: 1,
-  },
-  LIST: {
-    flex: 1,
-    width: '70%',
-    paddingBottom: 100,
-    marginTop: '4%',
-    marginLeft: '15%',
-  },
-  addButton: {
-    position: 'absolute',
-    right: 20,
-    bottom: 20,
-  },
-  NOTE: {
+  note: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',

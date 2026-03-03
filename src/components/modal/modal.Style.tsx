@@ -19,6 +19,11 @@ export const stylesheet = createStyles((theme) => ({
     borderColor: theme.colors.borderColor,
     marginBottom: '13%',
   },
+  titleContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   title: {
     fontSize: 24,
     fontFamily: theme.fonts.bold,

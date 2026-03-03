@@ -2,19 +2,16 @@ import React from 'react';
 
 import { FlatList, View } from 'react-native';
 
-import Ionicons from '@expo/vector-icons/Ionicons';
-import { useFonts } from 'expo-font';
-
+import { AddButtonComponent } from '../components/AddButtonComponent';
 import { EmptyState } from '../components/EmptyState';
 import { HeaderComponent } from '../components/Header';
-import { CustomInput } from '../components/inputs/CInput';
 import { ItemComponent } from '../components/ItemComponent';
 import { AddModal } from '../components/modal/AddModal';
 import { DeleteModal } from '../components/modal/DeleteModal';
 import { EditModal } from '../components/modal/EditModal';
-import { FONTS } from '../constants/fonts';
 import { useToDo } from '../hooks/useToDo';
 import { createStyles, useStyles } from '../theme/hooks/useStyles.hook';
+import { ItemDate } from '../types/types';
 
 export const HomeScreen = () => {
   const styles = useStyles(stylesheet);
@@ -35,14 +32,17 @@ export const HomeScreen = () => {
     onToggle,
   } = useToDo();
 
-  const [fontsLoaded] = useFonts({
-    'Kanit-Regular': FONTS.REGULAR,
-    'Kanit-Bold': FONTS.BOLD,
-  });
-
-  if (!fontsLoaded) {
-    return null;
-  }
+  const handlerPressDelete = (item: ItemDate) => {
+    setSelectedItem(item);
+    setModal('delete');
+  };
+  const handlerPressEdit = (item: ItemDate) => {
+    setSelectedItem(item);
+    setModal('edit');
+  };
+  const handlerPressAdd = () => {
+    setModal('add');
+  };
 
   return (
     <View style={styles.main}>
@@ -57,36 +57,22 @@ export const HomeScreen = () => {
           setFilter={setFilter}
         />
 
-        <View style={styles.BODY}>
+        <View style={styles.body}>
           <FlatList
             data={searchItem}
             ListEmptyComponent={<EmptyState />}
-            contentContainerStyle={styles.LIST}
+            contentContainerStyle={styles.list}
             keyExtractor={(item) => item.id.toString()}
             renderItem={({ item }) => (
               <ItemComponent
                 item={item}
-                onDelete={() => {
-                  setSelectedItem(item);
-                  setModal('delete');
-                }}
-                onEdit={() => {
-                  setSelectedItem(item);
-                  setModal('edit');
-                }}
+                onDelete={() => handlerPressDelete(item)}
+                onEdit={() => handlerPressEdit(item)}
                 onToggle={onToggle}
               />
             )}
           />
-          <Ionicons
-            name="add-circle"
-            size={50}
-            color="#6C63FF"
-            style={styles.addButton}
-            onPress={() => {
-              setModal('add');
-            }}
-          />
+          <AddButtonComponent onAdd={handlerPressAdd} />
         </View>
       </View>
 
@@ -96,23 +82,20 @@ export const HomeScreen = () => {
         onAdd={addItem}
       />
 
-      {selectedItem && (
-        <DeleteModal
-          visible={modal === 'delete'}
-          onDelete={deleteItem}
-          closeModalDelete={() => setModal(null)}
-          idItem={selectedItem.id}
-        />
-      )}
-      {selectedItem && (
-        <EditModal
-          visible={modal === 'edit'}
-          onEdit={editItem}
-          onClose={() => setModal(null)}
-          idItem={selectedItem.id}
-          titleItem={selectedItem.title}
-        />
-      )}
+      <DeleteModal
+        visible={modal === 'delete'}
+        onDelete={deleteItem}
+        closeModalDelete={() => setModal(null)}
+        idItem={selectedItem?.id}
+      />
+
+      <EditModal
+        visible={modal === 'edit'}
+        onEdit={editItem}
+        onClose={() => setModal(null)}
+        idItem={selectedItem?.id}
+        titleItem={selectedItem?.title}
+      />
     </View>
   );
 };
@@ -129,62 +112,15 @@ const stylesheet = createStyles((theme) => ({
     height: '100%',
     backgroundColor: theme.colors.background,
   },
-  head: {
-    height: '20%',
-    width: '100%',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    backgroundColor: theme.colors.background,
-  },
 
-  header: {
-    width: '100%',
-  },
-  BODY: {
+  body: {
     flex: 1,
   },
-  LIST: {
+  list: {
     flex: 1,
     width: '70%',
     paddingBottom: 100,
     marginTop: '4%',
     marginLeft: '15%',
-  },
-  addButton: {
-    position: 'absolute',
-    right: 20,
-    bottom: 20,
-  },
-  NOTE: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    width: '100%',
-    marginVertical: 5,
-    borderBottomWidth: 1,
-    borderColor: theme.colors.borderColor,
-  },
-  noteText: {
-    flex: 1,
-    fontSize: 20,
-    fontFamily: theme.fonts.regular,
-    padding: 20,
-    color: theme.colors.text,
-  },
-  iconContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  icon: {
-    margin: 8,
-    padding: 5,
-  },
-  checkBox: {
-    width: 26,
-    height: 26,
-    borderWidth: 1,
-    borderRadius: 2,
-    borderColor: theme.colors.borderColor,
-    //tintColor: '#6C63FF',
   },
 }));
