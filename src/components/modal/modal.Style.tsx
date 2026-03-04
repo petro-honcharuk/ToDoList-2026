@@ -32,19 +32,11 @@ export const stylesheet = createStyles((theme) => ({
     marginBottom: 25,
     color: theme.colors.text,
   },
-  input: {
-    height: 38,
-    width: '80%',
+  inputContainer: {
     borderWidth: 1,
     borderColor: theme.colors.borderColor,
     borderRadius: 5,
-    paddingTop: 8,
-    paddingRight: 16,
-    paddingLeft: 16,
-    paddingBottom: 8,
-    fontSize: 16,
-    fontFamily: theme.fonts.regular,
-    color: theme.colors.text,
+    width: '80%',
   },
 
   buttonContainerModal: {

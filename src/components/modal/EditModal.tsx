@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 
-import { View, TextInput } from 'react-native';
+import { View } from 'react-native';
 
 import { useStyles } from '@/src/theme/hooks/useStyles.hook';
 
 import { ButtonComponent } from '../ButtonComponent';
+import { InputComponent } from '../InputComponent';
 
 import { stylesheet } from './modal.style';
 import { ModalComponent } from './ModalComponent';
@@ -40,7 +41,9 @@ export const EditModal = ({
 
   return (
     <ModalComponent visible={visible} title="EDIT NOTE">
-      <TextInput style={styles.input} value={text} onChangeText={setText} />
+      <View style={styles.inputContainer}>
+        <InputComponent value={text} onChangeText={setText} />
+      </View>
       <View style={styles.buttonContainerModal}>
         <ButtonComponent
           title="Close"
