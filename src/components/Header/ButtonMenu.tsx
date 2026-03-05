@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { StyleSheet, Text } from 'react-native';
+import { Text } from 'react-native';
 
 import {
   Menu,
@@ -9,6 +9,8 @@ import {
   MenuOptionsCustomStyle,
   MenuTrigger,
 } from 'react-native-popup-menu';
+
+import { createStyles, useStyles } from '@/src/theme/hooks/useStyles.hook';
 
 export type ButtonMenuProps = {
   filter: 'all' | 'completed' | 'incomplete';
@@ -29,6 +31,7 @@ export const ButtonMenu = ({ filter, setFilter }: ButtonMenuProps) => {
   const onSelect = (value: 'all' | 'completed' | 'incomplete') => {
     setFilter(value);
   };
+  const styles = useStyles(stylesheet);
 
   return (
     <Menu onSelect={onSelect}>
@@ -68,7 +71,7 @@ const optionsStyles: MenuOptionsCustomStyle = {
   },
 };
 
-const styles = StyleSheet.create({
+const stylesheet = createStyles((theme) => ({
   container: {
     flex: 1,
     alignItems: 'center',
@@ -76,7 +79,7 @@ const styles = StyleSheet.create({
     gap: 10,
   },
   button: {
-    backgroundColor: '#6C63FF',
+    backgroundColor: theme.colors.primary,
     alignItems: 'center',
     justifyContent: 'center',
     width: 85,
@@ -84,6 +87,6 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   buttonText: {
-    color: 'white',
+    color: theme.colors.primaryText,
   },
-});
+}));

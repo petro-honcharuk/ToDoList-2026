@@ -5,10 +5,11 @@ export const lightTheme: Theme = {
   colors: {
     background: '#F7F7F7',
     text: '#252525',
-    buttonText: '#4F46E5',
+    buttonText: '#6C63FF',
     borderColor: '#6C63FF',
     borderColorButton: '#6C63FF',
     primary: '#6C63FF',
+    primaryText: '#F7F7F7',
     textButtonAdd: '#F7F7F7',
   },
   fonts: {

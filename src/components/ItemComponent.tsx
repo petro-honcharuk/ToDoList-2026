@@ -3,10 +3,12 @@ import React from 'react';
 import { View, Text } from 'react-native';
 
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
-import { Checkbox } from 'expo-checkbox';
+//import { Checkbox } from 'expo-checkbox';
 
 import { createStyles, useStyles } from '../theme/hooks/useStyles.hook';
 import { ItemDate } from '../types/types';
+
+import { CheckboxComponent } from './Header/CheckboxComponent';
 
 type Props = {
   item: ItemDate;
@@ -18,14 +20,15 @@ export const ItemComponent = ({ item, onDelete, onEdit, onToggle }: Props) => {
   const styles = useStyles(stylesheet);
   return (
     <View style={styles.note}>
-      <Checkbox
+      {/* <Checkbox
         value={item.completed}
         onValueChange={() => {
           onToggle(item.id);
         }}
         style={styles.checkBox}
         color={'#6C63FF'}
-      />
+      /> */}
+      <CheckboxComponent onToggle={onToggle} item={item} />
 
       <Text style={styles.noteText}>{item.title}</Text>
       <View style={styles.iconContainer}>
@@ -79,6 +82,5 @@ const stylesheet = createStyles((theme) => ({
     borderWidth: 1,
     borderRadius: 2,
     borderColor: theme.colors.borderColor,
-    //tintColor: '#6C63FF',
   },
 }));

@@ -24,13 +24,8 @@ const stylesheet = createStyles((theme) => ({
     position: 'absolute',
     right: 50,
     bottom: 50,
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    //backgroundColor: 'red',
   },
   addButton: {
-    //flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
     width: 55,
