@@ -5,10 +5,10 @@ import { View, Text } from 'react-native';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 //import { Checkbox } from 'expo-checkbox';
 
+import { CheckboxComponent } from '@/src/components/CheckboxComponent';
+
 import { createStyles, useStyles } from '../theme/hooks/useStyles.hook';
 import { ItemDate } from '../types/types';
-
-import { CheckboxComponent } from './Header/CheckboxComponent';
 
 type Props = {
   item: ItemDate;
@@ -18,6 +18,9 @@ type Props = {
 };
 export const ItemComponent = ({ item, onDelete, onEdit, onToggle }: Props) => {
   const styles = useStyles(stylesheet);
+  const onPressCheckbox = () => {
+    onToggle(item.id);
+  };
   return (
     <View style={styles.note}>
       {/* <Checkbox
@@ -28,7 +31,7 @@ export const ItemComponent = ({ item, onDelete, onEdit, onToggle }: Props) => {
         style={styles.checkBox}
         color={'#6C63FF'}
       /> */}
-      <CheckboxComponent onToggle={onToggle} item={item} />
+      <CheckboxComponent onPress={onPressCheckbox} checked={item.completed} />
 
       <Text style={styles.noteText}>{item.title}</Text>
       <View style={styles.iconContainer}>

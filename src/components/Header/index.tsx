@@ -1,10 +1,10 @@
 import React from 'react';
 
-import { View, Text, Image } from 'react-native';
+import { View, Text } from 'react-native';
 
 import { createStyles, useStyles } from '@/src/theme/hooks/useStyles.hook';
+import { useTheme } from '@/src/theme/hooks/useTheme.hook';
 
-import { ICONS } from '../../constants/icons';
 import { InputComponent } from '../InputComponent';
 
 import { ButtonMenu } from './ButtonMenu';
@@ -23,6 +23,8 @@ export const HeaderComponent = ({
   filter,
   setFilter,
 }: Props) => {
+  const { theme } = useTheme();
+
   const styles = useStyles(stylesheet);
 
   return (
@@ -32,15 +34,15 @@ export const HeaderComponent = ({
       </View>
       <View style={styles.headerContainer}>
         <View style={styles.inputContainer}>
-          <View style={styles.input}>
-            <InputComponent
-              placeholder={'Search note...'}
-              value={searchQuery}
-              onChangeText={onSearch}
-            />
-          </View>
-
-          <Image source={ICONS.SEARCH} style={styles.iconSearch} />
+          <InputComponent
+            placeholder={'Search note...'}
+            value={searchQuery}
+            onChangeText={onSearch}
+            iconSize={30}
+            iconName={'search'}
+            iconColor={theme.colors.primary}
+            withIcon={true}
+          />
         </View>
         <ButtonMenu filter={filter} setFilter={setFilter} />
         <ThemeSwitcher />
@@ -72,17 +74,9 @@ const stylesheet = createStyles((theme) => ({
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
+    gap: 16,
     height: 38,
-    borderWidth: 1,
-    borderColor: theme.colors.borderColor,
     borderRadius: 5,
-  },
-  input: {
-    flex: 1,
-  },
-  iconSearch: {
-    width: 21,
-    height: 21,
-    margin: 10,
+    paddingHorizontal: 16,
   },
 }));

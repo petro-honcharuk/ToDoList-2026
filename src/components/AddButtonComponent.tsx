@@ -11,7 +11,7 @@ type Props = {
 export const AddButtonComponent = ({ onAdd }: Props) => {
   const styles = useStyles(stylesheet);
   return (
-    <Pressable style={styles.container} onPress={onAdd}>
+    <Pressable onPress={onAdd}>
       <View style={styles.addButton}>
         <Text style={styles.title}>+</Text>
       </View>
@@ -20,12 +20,11 @@ export const AddButtonComponent = ({ onAdd }: Props) => {
 };
 
 const stylesheet = createStyles((theme) => ({
-  container: {
+  container: {},
+  addButton: {
     position: 'absolute',
     right: 50,
     bottom: 50,
-  },
-  addButton: {
     alignItems: 'center',
     justifyContent: 'center',
     width: 55,
