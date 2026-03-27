@@ -7,19 +7,34 @@ import HeaderComponent from './HeaderComponent';
 import Spacer from './Spacer';
 type Props = {
   visible: boolean;
-  onDelete: (id: number) => void;
-  itemId: number;
+  onAdd: (text: string) => void;
+  //itemId: number;
   onCancel: () => void;
+  text: string;
+  onClose: () => void;
 };
 
-const ModalOptionsDelete = ({ visible, onDelete, itemId, onCancel }: Props) => {
+const ModalOptionsAdd = ({
+  visible,
+  onCancel,
+  onAdd,
+  text,
+  onClose,
+}: Props) => {
   return (
     <Modal visible={visible}>
       <View style={stylesDelete.containerModal}>
-        <HeaderComponent title="Confirm the deletion?" />
-        <Spacer height={20} />
+        <HeaderComponent title="Do you want add new item?" />
+        <Spacer />
 
-        <Button title="Delete" onPress={() => onDelete(itemId)} />
+        <Button
+          title="Add"
+          onPress={() => {
+            onAdd(text);
+            onCancel();
+            onClose();
+          }}
+        />
         <Spacer height={15} />
         <Button title="Cansel" onPress={onCancel} />
       </View>
@@ -27,7 +42,7 @@ const ModalOptionsDelete = ({ visible, onDelete, itemId, onCancel }: Props) => {
   );
 };
 
-export default ModalOptionsDelete;
+export default ModalOptionsAdd;
 
 const stylesDelete = StyleSheet.create({
   containerModal: {
